@@ -85,10 +85,6 @@ export default function Play10x10() {
 
                   setBoard((oldBoard) => {
                     const newBoard = copyBoard(oldBoard);
-                    newBoard[rowIndex][colIndex].isRevealed = true;
-                    if (newBoard[rowIndex][colIndex].hasMine) {
-                      setGameState("lost");
-                    }
                     const survived = revealCellAndNeighbors(
                       rowIndex,
                       colIndex,

@@ -141,14 +141,16 @@ export const revealCellAndNeighbors = (
 ): boolean => {
   const cell = boardState[r][c];
   if (cell.isFlagged) return true;
-  if (!cell.isRevealed) {
+  if (cell.isRevealed) {
+    return revealNeighborsIfObvious(r, c, boardState);
+  } else {
     cell.isRevealed = true;
     if (cell.hasMine) return false;
 
     if (cell.neighborMines === 0)
       return revealNeighborsIfObvious(r, c, boardState);
-  } else return revealNeighborsIfObvious(r, c, boardState);
-  return true;
+    return true;
+  }
 };
 
 export const revealAllCells = (boardState: Cell[][]): void => {
