@@ -60,14 +60,17 @@ export default function Play10x10() {
             row.map((cell, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                className={classNames("w-8 h-8 border border-gray-300", {
-                  "bg-sky-500 dark:bg-gray-500":
-                    !cell.isRevealed && !cell.isFlagged,
-                  "bg-red-400": !cell.isRevealed && cell.isFlagged,
-                  "bg-gray-300 dark:bg-gray-900":
-                    cell.isRevealed && !cell.hasMine,
-                  "bg-red-500": cell.isRevealed && cell.hasMine,
-                })}
+                className={classNames(
+                  "w-8 h-8 border border-gray-300 flex items-center justify-center",
+                  {
+                    "bg-sky-500 dark:bg-gray-500":
+                      !cell.isRevealed && !cell.isFlagged,
+                    "bg-red-400": !cell.isRevealed && cell.isFlagged,
+                    "bg-gray-300 dark:bg-gray-900":
+                      cell.isRevealed && !cell.hasMine,
+                    "bg-red-500": cell.isRevealed && cell.hasMine,
+                  }
+                )}
                 onClick={() => {
                   if (gameState === "lost" || gameState === "won") {
                     return;
