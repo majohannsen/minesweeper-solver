@@ -197,3 +197,36 @@ export const flagObviousMines = (boardState: Cell[][]): void => {
     }
   }
 };
+
+export const revealObviousCells = (boardState: Cell[][]): void => {
+  for (let r = 0; r < boardState.length; r++) {
+    for (let c = 0; c < boardState[0].length; c++) {
+      const cell = boardState[r][c];
+      if (!cell.isRevealed) continue;
+      const neighbors = getNeighbors(r, c);
+      const flaggedNeighbors: Cell[] = [];
+      const hiddenNeighbors: Cell[] = [];
+      for (const n of neighbors) {
+        if (
+          n.r < 0 ||
+          n.r >= boardState.length ||
+          n.c < 0 ||
+          n.c >= boardState[0].length
+        )
+          continue;
+        const neighborCell = boardState[n.r][n.c];
+        if (neighborCell.isFlagged) {
+          flaggedNeighbors.push(neighborCell);
+        }
+        if (!neighborCell.isRevealed && !neighborCell.isFlagged) {
+          hiddenNeighbors.push(neighborCell);
+        }
+      }
+      if (flaggedNeighbors.length === cell.neighborMines) {
+        hiddenNeighbors.forEach((n) => {
+          revealCellAndNeighbors(n.row, n.col, boardState);
+        });
+      }
+    }
+  }
+};
